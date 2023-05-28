@@ -1,57 +1,33 @@
-// Ejercicio 2 - Préstamo
-// Un banco quiere otorgar préstamos a sus clientes, pero no todos pueden acceder a los mismos. El banco tiene ciertas reglas para saber a qué cliente se le puede otorgar:
-// solo le otorga préstamos a clientes cuya edad sea mayor a 22 años,
-// se encuentren empleados y tengan más de un año de antigüedad en su trabajo.
-// Dentro de los préstamos que otorga, no les cobrará interés a los que su sueldo sea mejor a $100.000.
-// Es necesario realizar una aplicación que tenga estas variables y que imprima un mensaje de acuerdo a cada caso.
-// Pista: Tu código tiene que poder imprimir al menos tres mensajes diferentes.
+// Ejercicio 2 - Qué edad tiene...
+// Un empleado de una empresa quiere saber el nombre y edad de uno de sus empleados. Según el siguiente map, debemos imprimir la edad de Benjamin.
+//   var employees = map[string]int{"Benjamin": 20, "Nahuel": 26, "Brenda": 19, "Darío": 44, "Pedro": 30}
+
+// Por otro lado, también es necesario:
+// Saber cuántos de sus empleados son mayores de 21 años.
+// Agregar un empleado nuevo a la lista, llamado Federico que tiene 25 años.
+// Eliminar a Pedro del map.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	evaluateClient(21, true, 19, 150000)
+	var employees = map[string]int{"Benjamin": 20, "Nahuel": 26, "Brenda": 19, "Darío": 44, "Pedro": 30}
+	var legalAgeEmployees int
 
-	evaluateClient(22, false, 0, 1000)
-
-	evaluateClient(23, true, 20, 200000)
-}
-
-func evaluateClient(age int, employed bool, seniority int, salary float32) {
-	approved := false
-	if age > 22 {
-		fmt.Println("Edad aprobada: mayor a 22 años.")
-		approved = true
-	} else {
-		fmt.Println("Edad desaprobada: no es mayor a 22 años.")
-		approved = false
-	}
-	if employed {
-		fmt.Println("Empleo aprobado: tiene empleo.")
-		approved = true
-
-	} else {
-		fmt.Println("Empleo desaprobada: está desempleado.")
-		approved = false
-
-	}
-	if seniority > 12 {
-		fmt.Println("Antiguedad aprobada: es mayor a 1 año.")
-		approved = true
-
-	} else {
-		fmt.Println("Antiguedad desaprobada: no es mayor a 1 año.")
-		approved = false
-	}
-	if approved {
-		if salary > 100000 {
-			fmt.Println("EXTRA Sueldo aprobado: es mayor a $100.000, no se cobrarían intereses.")
-		} else {
-			fmt.Println("EXTRA Sueldo desaprobado: no es mayor a $100.000, se cobrarían intereses.")
+	for _, v := range employees {
+		if v > 21 {
+			legalAgeEmployees++
 		}
 	}
 
-	fmt.Println("--------------------------------------------------------------------------")
-
+	fmt.Println(employees["Benjamin"])
+	fmt.Println("Cantidad de empleados mayores a 21 años: ", legalAgeEmployees)
+	employees["Federico"] = 25
+	fmt.Println("Empleado nuevo: ", employees["Federico"])
+	fmt.Println("Empleado a eliminar: Pedro")
+	delete(employees, "Pedro")
+	fmt.Println(employees)
 }
